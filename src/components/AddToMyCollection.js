@@ -71,7 +71,7 @@ export default function AddToMyCollection() {
     // },[])
 
     function handleNext(e) {
-        setPage(prevState => prevState + 1)
+        // setPage(prevState => prevState + 1)
         handleSubmit(e)
     }
 
@@ -98,6 +98,7 @@ export default function AddToMyCollection() {
                 console.log(response)
                 setSearchResults(response)
                 setCount(response.count)
+                setPage(prevState => prevState + 1)
             })
             .catch(err => console.error(err));
     }
@@ -107,8 +108,6 @@ export default function AddToMyCollection() {
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">Add New Sneaker!</h2>
-                    {(count < page * 100 || count === undefined) ? null : <Button /*disabled={loading}*/ className="w-100 mt-2" onClick={handleNext}>Next page</Button>}
-                    {page > 0 ? <Button /*disabled={loading}*/ className="w-100 mt-2" onClick={handlePrev}>Previous page</Button> : null}
                     <Form onSubmit={handleSubmit}>
                         <Form.Group id="brands">
                             {/*<Form.Label>brand</Form.Label>*/}
@@ -155,7 +154,9 @@ export default function AddToMyCollection() {
                         </Form.Group>
                         <Button /*disabled={loading}*/ className="w-100 mt-2" type="submit">Search for your sneaker!</Button>
                     </Form>
-                    <Link to="/my-collection" className="btn btn-primary w-100">Go back to My Collection</Link>
+                    {(count < page * 100 || count === undefined) ? null : <Button /*disabled={loading}*/ className="w-100 mt-2" onClick={handleNext}>Next page</Button>}
+                    {page > 0 ? <Button /*disabled={loading}*/ className="w-100 mt-2" onClick={handlePrev}>Previous page</Button> : null}
+                    <Link to="/my-collection" className="btn btn-primary w-100 mt-2">Go back to My Collection</Link>
                     {(searchResults.length !== 0) && searchResults.results.map(el => {
                         return <div key={el.id}>{el.title}
                         <img src={el.media.thumbUrl}></img>
