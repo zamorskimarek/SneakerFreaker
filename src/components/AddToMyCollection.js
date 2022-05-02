@@ -107,7 +107,7 @@ export default function AddToMyCollection() {
         <>
             <Card>
                 <Card.Body>
-                    <h2 className="text-center mb-4">Add New Sneaker!</h2>
+                    <h2 className="text-center mb-4">Add a New Sneaker!</h2>
                     <Form onSubmit={handleSubmit}>
                         <Form.Group id="brands">
                             {/*<Form.Label>brand</Form.Label>*/}
