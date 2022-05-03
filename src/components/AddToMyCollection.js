@@ -1,6 +1,7 @@
-import React, {useState} from "react";
-import {Card, Button, Form} from "react-bootstrap";
+import React, {useEffect, useState, useRef} from "react";
+import {Card, Button, Form, Spinner} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import SearchResult from "./SearchResult";
 
 export default function AddToMyCollection() {
     const [searchResults, setSearchResults] = useState([])
@@ -9,7 +10,14 @@ export default function AddToMyCollection() {
     const [selectedColorway, setSelectedColorway] = useState("")
     const [selectedName, setSelectedName] = useState("")
     const [page, setPage] = useState(0)
-    const [count, setCount] = useState()
+    const [count, setCount] = useState(null)
+    const [btnDisabled, setBtnDisabled] = useState(false)
+    const [searchLoading, setSearchLoading] = useState(false)
+
+    // const pageChange = useMemo(() => {
+    //     return page
+    // }, [page])
+
 
     const brands = [
         "ASICS",
@@ -70,20 +78,34 @@ export default function AddToMyCollection() {
     //
     // },[])
 
-    function handleNext(e) {
-        // setPage(prevState => prevState + 1)
-        handleSubmit(e)
+    function handleNext() {
+        setPage(prevState => prevState + 1)
     }
 
-    function handlePrev(e) {
+    function handlePrev() {
         setPage(prevState => prevState - 1)
-        handleSubmit(e)
     }
 
-    function handleSubmit(e) {
-        e.preventDefault()
+    const useIsMount = () => {
+        const isMountRef = useRef(true);
+        useEffect(() => {
+            isMountRef.current = false;
+        }, []);
+        return isMountRef.current;
+    };
 
+    const isMount = useIsMount();
 
+    useEffect(() => {
+        if (isMount) {
+            return
+        } else {
+            fetchAPI()
+        }
+    }, [page]);
+
+    function fetchAPI() {
+        setSearchLoading(true)
         const options = {
             method: 'GET',
             headers: {
@@ -98,10 +120,25 @@ export default function AddToMyCollection() {
                 console.log(response)
                 setSearchResults(response)
                 setCount(response.count)
-                setPage(prevState => prevState + 1)
+                setSearchLoading(false)
             })
             .catch(err => console.error(err));
+        setBtnDisabled(true)
+        setTimeout(() => {
+            setBtnDisabled(false)
+        }, 1000)
     }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        if (page !== 0) {
+            setPage(0)
+            return
+        } else {
+            fetchAPI()
+        }
+    }
+
 
     return (
         <>
@@ -152,15 +189,17 @@ export default function AddToMyCollection() {
                                     setSelectedName(`&name=${e.target.value}`)
                                 }}}></Form.Control>
                         </Form.Group>
-                        <Button /*disabled={loading}*/ className="w-100 mt-2" type="submit">Search for your sneaker!</Button>
+                        <Button className="w-100 mt-2" type="submit" disabled={btnDisabled}>Search for your sneaker!</Button>
                     </Form>
-                    {(count < page * 100 || count === undefined) ? null : <Button /*disabled={loading}*/ className="w-100 mt-2" onClick={handleNext}>Next page</Button>}
-                    {page > 0 ? <Button /*disabled={loading}*/ className="w-100 mt-2" onClick={handlePrev}>Previous page</Button> : null}
-                    <Link to="/my-collection" className="btn btn-primary w-100 mt-2">Go back to My Collection</Link>
+                    {(count < (page + 1) * 100 || count === null) ? null : <Button disabled={btnDisabled} className="w-100 mt-2" onClick={handleNext}>Next page</Button>}
+                    {page > 0 ? <Button disabled={btnDisabled} className="w-100 mt-2" onClick={handlePrev}>Previous page</Button> : null}
+                    <Link to="/" className="btn btn-primary w-100 mt-2">Go back to My Collection</Link>
+                    {searchLoading && <Spinner animation="grow" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>}
+                    {searchLoading && <span>LOADING RESULTS</span>}
                     {(searchResults.length !== 0) && searchResults.results.map(el => {
-                        return <div key={el.id}>{el.title}
-                        <img src={el.media.thumbUrl}></img>
-                        </div>
+                        return <SearchResult key={el.id} media={el.media} title={el.title} id={el.id} price={el.retailPrice}></SearchResult>
                     })}
                     {/*<Button className="btn btn-primary w-50 h-50">Add new sneaker to your collection</Button>*/}
                 </Card.Body>

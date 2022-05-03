@@ -1,16 +1,52 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Alert, Button, Card} from "react-bootstrap";
 import {Link, useNavigate} from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { getDatabase, ref, onValue } from "firebase/database";
+import SneakersFromMyCollection from "./SneakersFromMyCollection";
+
+
+
 
 export default function MyCollection() {
     const [error, setError] = useState("")
     const { currentUser, logout } = useAuth()
     const navigate = useNavigate()
+    const [myCollection, setMyCollection] = useState([])
+    const [totalPrice, setTotalPrice] = useState(null)
+
+    // const database = getDatabase();
+
+    // console.log(database)
+
+
+    useEffect(() => {
+        const db = getDatabase();
+        const myCollectionRef = ref(db, 'users/' + currentUser.uid + '/collection/');
+        console.log(myCollectionRef)
+        onValue(myCollectionRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data === null) {
+                setMyCollection([])
+                return
+            } else {
+                console.log(data)
+                console.log(Object.entries(data))
+                setMyCollection(Object.entries(data))
+            }
+        });
+    }, [])
+
+    useEffect(() => {
+        setTotalPrice(0)
+        myCollection.map(el => {
+            setTotalPrice(prev => prev + el[1].price)
+        })
+    }, [myCollection])
+
 
     async function handleLogout() {
         setError("")
-
         try {
             await logout()
             navigate("/login")
@@ -22,10 +58,15 @@ export default function MyCollection() {
         <>
             <Card>
                 <Card.Body>
-                    <h2 className="text-center mb-4">My Collection</h2>
+                    <h2 className="text-center mb-4">My Collection of : <strong>{currentUser.email}</strong></h2>
+                    <h3 className="text-center mb-4">Sneakers in My Collection: ${myCollection.length}</h3>
+                    <h3 className="text-center mb-4">Total worth of My Collection: {totalPrice}</h3>
                     {error && <Alert variant="danger">{error}</Alert>}
-                    <strong>Collection of: </strong> {currentUser.email}
                     <Link to="/add-to-my-collection" className="btn btn-primary w-100 mt-3">Add To My Collection</Link>
+                    {(myCollection.length !== 0) && myCollection.map(el => {
+                        return <SneakersFromMyCollection key={el[0]} img={el[1].img} title={el[1].title} price={el[1].price} id={el[0]}></SneakersFromMyCollection>
+                    })}
+                    {(myCollection.length === 0) && null}
                 </Card.Body>
             </Card>
             <div className="w-100 text-center mt-2">
