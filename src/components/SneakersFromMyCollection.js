@@ -4,7 +4,6 @@ import {getDatabase, ref, remove} from "firebase/database";
 import { useAuth } from "../contexts/AuthContext";
 
 
-
 export default function SneakersFromMyCollection({title, img, id, price}) {
     const { currentUser } = useAuth()
     function handleRemove() {
@@ -16,14 +15,19 @@ export default function SneakersFromMyCollection({title, img, id, price}) {
 
     return (
         <>
-            <Card className="mt-3 p-3">
+            <style type="text/css">
+                {`
+                    
+                `}
+            </style>
+            <Card className="mt-3 p-3 card-bckgrnd card-custom">
                 <div className="d-flex flex-column align-items-center text-center">
                     <div>Name: {title}</div>
                     <div>Retail price: ${price}</div>
 
                     <img src={img}></img>
                     <div>
-                        <Button variant="primary" size="sm" onClick={handleRemove}>Remove from My Collection</Button>
+                        <Button className="btn-custom" variant="primary" size="sm" onClick={handleRemove}>Remove from My Collection</Button>
                     </div>
                 </div>
             </Card>

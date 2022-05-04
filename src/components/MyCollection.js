@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { getDatabase, ref, onValue } from "firebase/database";
 import SneakersFromMyCollection from "./SneakersFromMyCollection";
+import Menu from "./Menu";
 
 
 
@@ -56,13 +57,30 @@ export default function MyCollection() {
     }
     return (
         <>
-            <Card>
+            <style type="text/css">
+                {`  
+                    .card-bckgrnd {
+                        background-color: #a8dadcff;
+                        border: 2px solid #457b9dff;
+                    }
+                    .btn-custom {
+                        background-color: #457b9dff;
+                        color: #f1faeeff;
+                        border: 2px solid #f1faeeff;
+                    }
+                    .card-custom {
+                        background-color: #f1faeeff;
+                    }
+                `}
+            </style>
+            <Menu></Menu>
+            <Card className="card-bckgrnd">
                 <Card.Body>
                     <h2 className="text-center mb-4">My Collection of : <strong>{currentUser.email}</strong></h2>
-                    <h3 className="text-center mb-4">Sneakers in My Collection: ${myCollection.length}</h3>
-                    <h3 className="text-center mb-4">Total worth of My Collection: {totalPrice}</h3>
+                    <h3 className="text-center mb-4">Sneakers in My Collection: {myCollection.length}</h3>
+                    <h3 className="text-center mb-4">Total worth of My Collection: ${totalPrice}</h3>
                     {error && <Alert variant="danger">{error}</Alert>}
-                    <Link to="/add-to-my-collection" className="btn btn-primary w-100 mt-3">Add To My Collection</Link>
+                    <Link to="/add-to-my-collection" className="btn btn-primary w-100 mt-3 btn-custom">Add To My Collection</Link>
                     {(myCollection.length !== 0) && myCollection.map(el => {
                         return <SneakersFromMyCollection key={el[0]} img={el[1].img} title={el[1].title} price={el[1].price} id={el[0]}></SneakersFromMyCollection>
                     })}

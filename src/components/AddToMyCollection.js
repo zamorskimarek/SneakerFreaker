@@ -2,6 +2,7 @@ import React, {useEffect, useState, useRef} from "react";
 import {Card, Button, Form, Spinner} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import SearchResult from "./SearchResult";
+import Menu from "./Menu";
 
 export default function AddToMyCollection() {
     const [searchResults, setSearchResults] = useState([])
@@ -142,6 +143,7 @@ export default function AddToMyCollection() {
 
     return (
         <>
+            <Menu></Menu>
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">Add a New Sneaker!</h2>
