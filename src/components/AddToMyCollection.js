@@ -143,8 +143,29 @@ export default function AddToMyCollection() {
 
     return (
         <>
+            <style type="text/css">
+                {`  
+                    .card-bckgrnd {
+                        background-color: #a8dadcff;
+                        border: 2px solid #457b9dff;
+                    }
+                    .btn-custom {
+                        background-color: #457b9dff;
+                        color: #f1faeeff;
+                        border: 2px solid #f1faeeff;
+                    }
+                    .menu-custom {
+                        border: 2px solid #457b9dff;
+                        margin-bottom: 4px;
+                        border-radius: .25rem;
+                    }
+                    .card-custom {
+                        background-color: #f1faeeff;
+                    }
+                `}
+            </style>
             <Menu></Menu>
-            <Card>
+            <Card className="card-bckgrnd">
                 <Card.Body>
                     <h2 className="text-center mb-4">Add a New Sneaker!</h2>
                     <Form onSubmit={handleSubmit}>
@@ -191,11 +212,11 @@ export default function AddToMyCollection() {
                                     setSelectedName(`&name=${e.target.value}`)
                                 }}}></Form.Control>
                         </Form.Group>
-                        <Button className="w-100 mt-2" type="submit" disabled={btnDisabled}>Search for your sneaker!</Button>
+                        <Button className="w-100 mt-2 btn-custom" type="submit" disabled={btnDisabled}>Search for your sneaker!</Button>
                     </Form>
-                    {(count < (page + 1) * 100 || count === null) ? null : <Button disabled={btnDisabled} className="w-100 mt-2" onClick={handleNext}>Next page</Button>}
-                    {page > 0 ? <Button disabled={btnDisabled} className="w-100 mt-2" onClick={handlePrev}>Previous page</Button> : null}
-                    <Link to="/" className="btn btn-primary w-100 mt-2">Go back to My Collection</Link>
+                    {(count < (page + 1) * 100 || count === null) ? null : <Button disabled={btnDisabled} className="w-100 mt-2 btn-custom" onClick={handleNext}>Next page</Button>}
+                    {page > 0 ? <Button disabled={btnDisabled} className="w-100 mt-2 btn-custom" onClick={handlePrev}>Previous page</Button> : null}
+                    <Link to="/" className="btn btn-primary w-100 mt-2 btn-custom">Go back to My Collection</Link>
                     {searchLoading && <Spinner animation="grow" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </Spinner>}

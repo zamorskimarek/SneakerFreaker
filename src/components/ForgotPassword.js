@@ -28,7 +28,20 @@ export default function ForgotPassword() {
 
     return (
         <>
-            <Card>
+            <style type="text/css">
+                {`  
+                    .card-bckgrnd {
+                        background-color: #a8dadcff;
+                        border: 2px solid #457b9dff;
+                    }
+                    .btn-custom {
+                        background-color: #457b9dff;
+                        color: #f1faeeff;
+                        border: 2px solid #f1faeeff;
+                    }
+                `}
+            </style>
+            <Card className="card-bckgrnd">
                 <Card.Body>
                     <h2 className="text-center mb-4">Password Reset</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
@@ -38,7 +51,7 @@ export default function ForgotPassword() {
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" ref={emailRef } required></Form.Control>
                         </Form.Group>
-                        <Button disabled={loading} className="w-100 mt-2" type="submit">Reset Password</Button>
+                        <Button disabled={loading} className="w-100 mt-2 btn-custom" type="submit">Reset Password</Button>
                     </Form>
                     <div className="w-100 text-center mt-2">
                         <Link to="/login">Log in</Link>

@@ -24,7 +24,7 @@ export default function SearchResult({id, title, media, price}) {
 
     return (
         <>
-            <Card className="mt-3 p-3">
+            <Card className="mt-3 p-3 card-bckgrnd card-custom">
                 <div className="d-flex flex-column align-items-center text-center">
                     <div>Name: {title}</div>
                     <div>Retail price: ${price}</div>
@@ -33,7 +33,7 @@ export default function SearchResult({id, title, media, price}) {
                     </Spinner>}
                     <img src={media.thumbUrl} onLoad={() => setLoading(false)}></img>
                     <div>
-                        <Button variant="primary" size="sm" onClick={handleAdd}>ADD</Button>
+                        <Button variant="primary" size="sm" className="btn-custom mt-3" onClick={handleAdd}>Add to My Collection</Button>
                     </div>
                 </div>
             </Card>

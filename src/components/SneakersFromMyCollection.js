@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Button, Card, Spinner} from "react-bootstrap";
+import React from "react";
+import {Button, Card} from "react-bootstrap";
 import {getDatabase, ref, remove} from "firebase/database";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -15,11 +15,6 @@ export default function SneakersFromMyCollection({title, img, id, price}) {
 
     return (
         <>
-            <style type="text/css">
-                {`
-                    
-                `}
-            </style>
             <Card className="mt-3 p-3 card-bckgrnd card-custom">
                 <div className="d-flex flex-column align-items-center text-center">
                     <div>Name: {title}</div>

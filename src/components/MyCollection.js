@@ -16,11 +16,6 @@ export default function MyCollection() {
     const [myCollection, setMyCollection] = useState([])
     const [totalPrice, setTotalPrice] = useState(null)
 
-    // const database = getDatabase();
-
-    // console.log(database)
-
-
     useEffect(() => {
         const db = getDatabase();
         const myCollectionRef = ref(db, 'users/' + currentUser.uid + '/collection/');
@@ -71,6 +66,11 @@ export default function MyCollection() {
                     .card-custom {
                         background-color: #f1faeeff;
                     }
+                    .menu-custom {
+                        border: 2px solid #457b9dff;
+                        margin-bottom: 4px;
+                        border-radius: .25rem;
+                    }
                 `}
             </style>
             <Menu></Menu>
@@ -78,7 +78,7 @@ export default function MyCollection() {
                 <Card.Body>
                     <h2 className="text-center mb-4">My Collection of : <strong>{currentUser.email}</strong></h2>
                     <h3 className="text-center mb-4">Sneakers in My Collection: {myCollection.length}</h3>
-                    <h3 className="text-center mb-4">Total worth of My Collection: ${totalPrice}</h3>
+                    <h3 className="text-center mb-4">Total value of My Collection: ${totalPrice}</h3>
                     {error && <Alert variant="danger">{error}</Alert>}
                     <Link to="/add-to-my-collection" className="btn btn-primary w-100 mt-3 btn-custom">Add To My Collection</Link>
                     {(myCollection.length !== 0) && myCollection.map(el => {
@@ -88,7 +88,7 @@ export default function MyCollection() {
                 </Card.Body>
             </Card>
             <div className="w-100 text-center mt-2">
-                <Button variant="link" onClick={handleLogout}>Log Out</Button>
+                <Button className="btn-custom mb-2" variant="link" onClick={handleLogout}>Log Out</Button>
             </div>
         </>
     )
