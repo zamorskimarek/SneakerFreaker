@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Alert, Button, Card} from "react-bootstrap";
+import {Alert, Button, Card, Spinner} from "react-bootstrap";
 import {Link, useNavigate} from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { getDatabase, ref, onValue } from "firebase/database";
@@ -15,8 +15,10 @@ export default function MyCollection() {
     const navigate = useNavigate()
     const [myCollection, setMyCollection] = useState([])
     const [totalPrice, setTotalPrice] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         const db = getDatabase();
         const myCollectionRef = ref(db, 'users/' + currentUser.uid + '/collection/');
         console.log(myCollectionRef)
@@ -24,11 +26,13 @@ export default function MyCollection() {
             const data = snapshot.val();
             if (data === null) {
                 setMyCollection([])
+                setLoading(false)
                 return
             } else {
                 console.log(data)
                 console.log(Object.entries(data))
                 setMyCollection(Object.entries(data))
+                setLoading(false)
             }
         });
     }, [])
@@ -81,6 +85,11 @@ export default function MyCollection() {
                     <h3 className="text-center mb-4">Total value of My Collection: ${totalPrice}</h3>
                     {error && <Alert variant="danger">{error}</Alert>}
                     <Link to="/add-to-my-collection" className="btn btn-primary w-100 mt-3 btn-custom">Add To My Collection</Link>
+                    {loading && <div className="d-flex justify-content-center">
+                                    <Spinner animation="grow" role="status" size="xxl">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </Spinner>
+                                </div>}
                     {(myCollection.length !== 0) && myCollection.map(el => {
                         return <SneakersFromMyCollection key={el[0]} img={el[1].img} title={el[1].title} price={el[1].price} id={el[0]}></SneakersFromMyCollection>
                     })}
