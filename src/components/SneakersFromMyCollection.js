@@ -20,7 +20,7 @@ export default function SneakersFromMyCollection({title, img, id, price}) {
                     <div>Name: {title}</div>
                     <div>Retail price: ${price}</div>
 
-                    <img src={img}></img>
+                    <img src={img} alt=""></img>
                     <div>
                         <Button className="btn-custom" variant="primary" size="sm" onClick={handleRemove}>Remove from My Collection</Button>
                     </div>

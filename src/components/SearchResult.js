@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Button, Spinner, Card, Toast} from "react-bootstrap";
-import {getDatabase, ref, set, push} from "firebase/database";
+import {getDatabase, ref, set} from "firebase/database";
 import { useAuth } from "../contexts/AuthContext";
 
 
@@ -44,7 +44,7 @@ export default function SearchResult({id, title, media, price}) {
                             <span className="visually-hidden">Loading...</span>
                         </Spinner>
                     </div>}
-                    <img src={media.thumbUrl} onLoad={() => setLoading(false)}></img>
+                    <img src={media.thumbUrl} alt="" onLoad={() => setLoading(false)}></img>
                     <div>
                         <Button variant="primary" size="sm" className="btn-custom mt-3" onClick={handleAdd}>Add to My Collection</Button>
                     </div>
