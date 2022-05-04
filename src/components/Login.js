@@ -18,6 +18,7 @@ export default function Login() {
             setError("")
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
+
             navigate("/")
         } catch {
             setError("Failed to sign in")
@@ -28,7 +29,20 @@ export default function Login() {
 
     return (
         <>
-            <Card>
+            <style type="text/css">
+                {`  
+                    .card-bckgrnd {
+                        background-color: #a8dadcff;
+                        border: 2px solid #457b9dff;
+                    }
+                    .btn-custom {
+                        background-color: #457b9dff;
+                        color: #f1faeeff;
+                        border: 2px solid #f1faeeff;
+                    }
+                `}
+            </style>
+            <Card className="card-bckgrnd">
                 <Card.Body>
                     <h2 className="text-center mb-4">Log In</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
@@ -41,7 +55,7 @@ export default function Login() {
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" ref={passwordRef} required></Form.Control>
                         </Form.Group>
-                        <Button disabled={loading} className="w-100 mt-2" type="submit">Log In</Button>
+                        <Button disabled={loading} className="w-100 mt-2 btn-custom" type="submit">Log In</Button>
                     </Form>
                     <div className="w-100 text-center mt-2">
                         <Link to="/forgot-password">Forgot Password?</Link>

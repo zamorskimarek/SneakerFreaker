@@ -33,7 +33,20 @@ export default function Signup() {
 
     return (
         <>
-            <Card>
+            <style type="text/css">
+                {`  
+                    .card-bckgrnd {
+                        background-color: #a8dadcff;
+                        border: 2px solid #457b9dff;
+                    }
+                    .btn-custom {
+                        background-color: #457b9dff;
+                        color: #f1faeeff;
+                        border: 2px solid #f1faeeff;
+                    }
+                `}
+            </style>
+            <Card className="card-bckgrnd">
                 <Card.Body>
                     <h2 className="text-center mb-4">Sign Up</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
@@ -50,7 +63,7 @@ export default function Signup() {
                             <Form.Label>Password Confirmation</Form.Label>
                             <Form.Control type="password" ref={passwordConfirmRef} required></Form.Control>
                         </Form.Group>
-                        <Button disabled={loading} className="w-100" type="submit">Sign Up</Button>
+                        <Button disabled={loading} className="w-100 btn-custom mt-3" type="submit">Sign Up</Button>
                     </Form>
                 </Card.Body>
             </Card>
