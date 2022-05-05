@@ -2,7 +2,8 @@ import React from "react";
 
 
 export default function ButtonToTop({location}) {
-    const style = {width: "75px",
+    const style = {
+        width: "75px",
         height: "75px",
         borderRadius: "50%",
         backgroundColor: "#a8dadcff",

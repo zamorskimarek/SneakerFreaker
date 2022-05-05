@@ -33,19 +33,6 @@ export default function Signup() {
 
     return (
         <>
-            <style type="text/css">
-                {`  
-                    .card-bckgrnd {
-                        background-color: #a8dadcff;
-                        border: 2px solid #457b9dff;
-                    }
-                    .btn-custom {
-                        background-color: #457b9dff;
-                        color: #f1faeeff;
-                        border: 2px solid #f1faeeff;
-                    }
-                `}
-            </style>
             <Card className="card-bckgrnd">
                 <Card.Body>
                     <h2 className="text-center mb-4">Sign Up</h2>

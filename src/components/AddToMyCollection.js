@@ -150,32 +150,6 @@ export default function AddToMyCollection() {
 
     return (
         <>
-            <style type="text/css">
-                {`  
-                    .card-bckgrnd {
-                        background-color: #a8dadcff;
-                        border: 2px solid #457b9dff;
-                    }
-                    .btn-custom {
-                        background-color: #457b9dff;
-                        color: #f1faeeff;
-                        border: 2px solid #f1faeeff;
-                    }
-                    .btn-custom:hover {
-                        background-color: #457b9dff;
-                        color: #f1faeeff;
-                        border: 2px solid #f1faeeff;
-                    }
-                    .menu-custom {
-                        border: 2px solid #457b9dff;
-                        margin-bottom: 4px;
-                        border-radius: .25rem;
-                    }
-                    .card-custom {
-                        background-color: #f1faeeff;
-                    }
-                `}
-            </style>
             <Menu></Menu>
             <Card id="top-collection" className="card-bckgrnd">
                 <Card.Body>
