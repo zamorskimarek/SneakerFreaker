@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Spinner, Card, Toast} from "react-bootstrap";
+import {Button, Spinner, Card, Toast, ToastContainer} from "react-bootstrap";
 import {getDatabase, ref, set} from "firebase/database";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -24,27 +24,30 @@ export default function SearchResult({id, title, media, price}) {
 
     return (
         <>
-            <Card className="mt-3 p-3 card-bckgrnd card-custom">
-                <Toast show={toast} onClose={toggleShowToast}>
-                    <Toast.Header>
-                        <img
-                            className="me-auto"
-                            src={require('../logo/logo_small.jpg')}
-                            alt=""
-                        />
-                        {/*<strong className="me-auto"></strong>*/}
-                    </Toast.Header>
-                    <Toast.Body>Congrats, those kicks are now in My Collection</Toast.Body>
-                </Toast>
+            <Card className="mt-3 p-3 card-bckgrnd card-custom" style={{minHeight: "357px"}}>
+                <ToastContainer position="top-center">
+                    <Toast show={toast} onClose={toggleShowToast} position>
+                        <Toast.Header>
+                            <img
+                                className="me-auto"
+                                src={require('../logo/logo_small.jpg')}
+                                alt=""
+                            />
+                        </Toast.Header>
+                        <Toast.Body>Congrats, those kicks are now in My Collection</Toast.Body>
+                    </Toast>
+                </ToastContainer>
+
                 <div className="d-flex flex-column align-items-center text-center">
-                    <div>Name: {title}</div>
+                    <div style={{minHeight: "48px"}}>Name: {title}</div>
                     <div>Retail price: ${price}</div>
-                    {loading && <div className="d-flex justify-content-center">
+                    {media.thumbUrl === null && <img src={require('../logo/not-available.jpg')} alt="" className="img-fluid max-width: 100%" style={{maxHeight: "200px"}}></img>}
+                    {media.thumbUrl !== null && loading && <div className="d-flex justify-content-center" style={{minHeight: "200px"}}>
                         <Spinner animation="border" role="status" size="xxl">
                             <span className="visually-hidden">Loading...</span>
                         </Spinner>
                     </div>}
-                    <img src={media.thumbUrl} alt="" onLoad={() => setLoading(false)}></img>
+                    <img loading="lazy" src={media.thumbUrl} alt="" className="img-fluid max-width: 100%" onLoad={() => setLoading(false)}></img>
                     <div>
                         <Button variant="primary" size="sm" className="btn-custom mt-3" onClick={handleAdd}>Add to My Collection</Button>
                     </div>

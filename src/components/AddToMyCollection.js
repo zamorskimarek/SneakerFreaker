@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from "react";
-import {Card, Button, Form, Spinner} from "react-bootstrap";
+import {Card, Button, Form, Spinner, Col, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import SearchResult from "./SearchResult";
 import Menu from "./Menu";
@@ -118,7 +118,6 @@ export default function AddToMyCollection() {
         fetch(`https://v1-sneakers.p.rapidapi.com/v1/sneakers?limit=100${selectedGender}&page=${page}${selectedBrand}${selectedColorway}${selectedName}`, options)
             .then(response => response.json())
             .then(response => {
-                console.log(response)
                 setSearchResults(response)
                 setCount(response.count)
                 setSearchLoading(false)
@@ -174,49 +173,61 @@ export default function AddToMyCollection() {
                 <Card.Body>
                     <h2 className="text-center mb-4">Add a New Sneaker!</h2>
                     <Form onSubmit={handleSubmit}>
-                        <Form.Group id="brands">
-                            {/*<Form.Label>brand</Form.Label>*/}
-                            <Form.Select aria-label="Please select the brand of the shoe you are looking for" onChange={e => {
-                                if (e.target.value === "") {
-                                    setSelectedBrand("")
-                                } else {
-                                    setSelectedBrand(`&brand=${e.target.value}`)
-                                }}}>
-                                <option value="">Select brand</option>
-                                {brands.map(el => {
-                                    return <option value={el} key={el}>{el}</option>
-                                })}
-                            </Form.Select>
-                        </Form.Group>
-                        <Form.Group id="brands">
-                            <Form.Select aria-label="Please select gender of the shoe you are looking for" onChange={e => {
-                                if (e.target.value === "") {
-                                    setSelectedGender("")
-                                } else {
-                                    setSelectedGender(`&gender=${e.target.value}`)
-                                }}}>
-                                <option value="">Select gender</option>
-                                {genders.map(el => {
-                                    return <option value={el} key={el}>{el}</option>
-                                })}
-                            </Form.Select>
-                        </Form.Group>
-                        <Form.Group id="colorway">
-                            <Form.Control type="text" placeholder="Colorway" onChange={e => {
-                                if (e.target.value === "") {
-                                    setSelectedColorway("")
-                                } else {
-                                    setSelectedColorway(`&colorway=${e.target.value}`)
-                                }}}></Form.Control>
-                        </Form.Group>
-                        <Form.Group id="name">
-                            <Form.Control type="text" placeholder="Name" onChange={e => {
-                                if (e.target.value === "") {
-                                    setSelectedName("")
-                                } else {
-                                    setSelectedName(`&name=${e.target.value}`)
-                                }}}></Form.Control>
-                        </Form.Group>
+                        <Row>
+                            <Col sm={6} className="mb-2">
+                                <Form.Group id="brands">
+                                    {/*<Form.Label>brand</Form.Label>*/}
+                                    <Form.Select aria-label="Please select the brand of the shoe you are looking for" onChange={e => {
+                                        if (e.target.value === "") {
+                                            setSelectedBrand("")
+                                        } else {
+                                            setSelectedBrand(`&brand=${e.target.value}`)
+                                        }}}>
+                                        <option value="">Select brand</option>
+                                        {brands.map(el => {
+                                            return <option value={el} key={el}>{el}</option>
+                                        })}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col sm={6} className="mb-2">
+                                <Form.Group id="gender">
+                                    <Form.Select aria-label="Please select gender of the shoe you are looking for" onChange={e => {
+                                        if (e.target.value === "") {
+                                            setSelectedGender("")
+                                        } else {
+                                            setSelectedGender(`&gender=${e.target.value}`)
+                                        }}}>
+                                        <option value="">Select gender</option>
+                                        {genders.map(el => {
+                                            return <option value={el} key={el}>{el}</option>
+                                        })}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm={6} className="mb-2">
+                                <Form.Group id="colorway">
+                                    <Form.Control type="text" placeholder="Colorway" onChange={e => {
+                                        if (e.target.value === "") {
+                                            setSelectedColorway("")
+                                        } else {
+                                            setSelectedColorway(`&colorway=${e.target.value}`)
+                                        }}}></Form.Control>
+                                </Form.Group>
+                            </Col>
+                            <Col sm={6} className="mb-2">
+                                <Form.Group id="name">
+                                    <Form.Control type="text" placeholder="Name" onChange={e => {
+                                        if (e.target.value === "") {
+                                            setSelectedName("")
+                                        } else {
+                                            setSelectedName(`&name=${e.target.value}`)
+                                        }}}></Form.Control>
+                                </Form.Group>
+                            </Col>
+                        </Row>
                         <Button className="w-100 mt-2 btn-custom" type="submit" disabled={btnDisabled}>Search for your sneaker!</Button>
                     </Form>
                     {(count < (page + 1) * 100 || count === null) ? null : <Button disabled={btnDisabled} className="w-100 mt-2 btn-custom" onClick={handleNext}>Next page</Button>}
@@ -229,10 +240,15 @@ export default function AddToMyCollection() {
 
                         </Spinner>
                     </div>}
-                    {(searchResults.length !== 0) && searchResults.results.map(el => {
-                        return <SearchResult key={el.id} media={el.media} title={el.title} id={el.id} price={el.retailPrice}></SearchResult>
-                    })}
-                    {/*<Button className="btn btn-primary w-50 h-50">Add new sneaker to your collection</Button>*/}
+                    <Row>
+                        {(searchResults.length !== 0) && searchResults.results.map(el => {
+                            return (<Col sm={6} xl={4} key={el.id}>
+                                    <SearchResult media={el.media} title={el.title} id={el.id} price={el.retailPrice}></SearchResult>
+                                </Col>
+                            )
+                        })}
+                    </Row>
+
                 </Card.Body>
             </Card>
         </>

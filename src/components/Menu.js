@@ -24,7 +24,7 @@ export default function Menu() {
         }
     }
     return (
-        <Navbar bg="light" className="menu-custom" expand="md">
+        <Navbar bg="light" className="menu-custom mt-1" expand="md">
             <Container>
                 <Navbar.Brand><img alt="logo" src={require('../logo/logo_small.jpg')} /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

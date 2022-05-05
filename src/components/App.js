@@ -1,6 +1,6 @@
 import './App.css';
 import Signup from "./Signup";
-import {Container} from "react-bootstrap";
+import {Container, Row, Col} from "react-bootstrap";
 import {AuthProvider} from "../contexts/AuthContext";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Dashboard from "./Dashboard";
@@ -14,33 +14,61 @@ import AddToMyCollection from "./AddToMyCollection";
 function App() {
   return (
       <Container className="d-flex align-items-center justify-content-center bckgrnd" style={{minHeight: "100vh"}} fluid="md">
-          <div className="w-100" style={{maxWidth: "400px"}}>
+          <div className="w-100">
               <Router>
                   <AuthProvider>
                       <Routes>
                           <Route exact path="/dashboard" element={
                               <PrivateRoute>
-                                  <Dashboard />
+                                  <Row>
+                                      <Col  md={{ span: 8, offset: 2}}>
+                                          <Dashboard />
+                                      </Col>
+                                  </Row>
                               </PrivateRoute>
                           }></Route>
                           <Route exact path="/" element={
                               <PrivateRoute>
-                                  <MyCollection />
+                                  <Row>
+                                      <Col  md={{ span: 10, offset: 1}}>
+                                          <MyCollection />
+                                      </Col>
+                                  </Row>
                               </PrivateRoute>
                           }></Route>
                           <Route exact path="/add-to-my-collection" element={
                               <PrivateRoute>
-                                  <AddToMyCollection />
+                                  <Row>
+                                      <Col  md={{ span: 10, offset: 1}}>
+                                          <AddToMyCollection />
+                                      </Col>
+                                  </Row>
                               </PrivateRoute>
                           }></Route>
                           <Route path="/update-profile" element={
                               <PrivateRoute>
-                                  <UpdateProfile />
+                                  <Row>
+                                      <Col  md={{ span: 8, offset: 2}}>
+                                          <UpdateProfile />
+                                      </Col>
+                                  </Row>
                               </PrivateRoute>
                           }></Route>
-                          <Route exact path="/signup" element={<Signup />}></Route>
-                          <Route exact path="/login" element={<Login />}></Route>
-                          <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+                          <Route exact path="/signup" element={<Row>
+                              <Col  md={{ span: 6, offset: 3}}>
+                                  <Signup />
+                              </Col>
+                          </Row>}></Route>
+                          <Route exact path="/login" element={<Row>
+                              <Col  md={{ span: 6, offset: 3}}>
+                                  <Login />
+                              </Col>
+                          </Row>}></Route>
+                          <Route path="/forgot-password" element={<Row>
+                              <Col  md={{ span: 6, offset: 3}}>
+                                  <ForgotPassword />
+                              </Col>
+                          </Row>}></Route>
                       </Routes>
                   </AuthProvider>
               </Router>

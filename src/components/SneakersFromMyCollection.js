@@ -15,12 +15,12 @@ export default function SneakersFromMyCollection({title, img, id, price}) {
 
     return (
         <>
-            <Card className="mt-3 p-3 card-bckgrnd card-custom">
+            <Card className="mt-3 p-3 card-bckgrnd card-custom" style={{minHeight: "341px"}}>
                 <div className="d-flex flex-column align-items-center text-center">
-                    <div>Name: {title}</div>
+                    <div style={{minHeight: "48px"}}>Name: {title}</div>
                     <div>Retail price: ${price}</div>
-
-                    <img src={img} alt=""></img>
+                    {img === undefined && <img src={require('../logo/not-available.jpg')} alt="" className="img-fluid max-width: 100%" style={{maxHeight: "200px"}}></img>}
+                    <img src={img} alt="" className="img-fluid max-width: 100%"></img>
                     <div>
                         <Button className="btn-custom" variant="primary" size="sm" onClick={handleRemove}>Remove from My Collection</Button>
                     </div>

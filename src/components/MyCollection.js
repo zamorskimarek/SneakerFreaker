@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Alert, Button, Card, Spinner} from "react-bootstrap";
+import {Alert, Button, Card, Spinner, Col, Row} from "react-bootstrap";
 import {Link, useNavigate} from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { getDatabase, ref, onValue } from "firebase/database";
@@ -21,7 +21,6 @@ export default function MyCollection() {
         setLoading(true)
         const db = getDatabase();
         const myCollectionRef = ref(db, 'users/' + currentUser.uid + '/collection/');
-        console.log(myCollectionRef)
         onValue(myCollectionRef, (snapshot) => {
             const data = snapshot.val();
             if (data === null) {
@@ -29,8 +28,6 @@ export default function MyCollection() {
                 setLoading(false)
                 return
             } else {
-                console.log(data)
-                console.log(Object.entries(data))
                 setMyCollection(Object.entries(data))
                 setLoading(false)
             }
@@ -90,9 +87,15 @@ export default function MyCollection() {
                                         <span className="visually-hidden">Loading...</span>
                                     </Spinner>
                                 </div>}
-                    {(myCollection.length !== 0) && myCollection.map(el => {
-                        return <SneakersFromMyCollection key={el[0]} img={el[1].img} title={el[1].title} price={el[1].price} id={el[0]}></SneakersFromMyCollection>
-                    })}
+                    <Row>
+                        {(myCollection.length !== 0) && myCollection.map(el => {
+                            return (<Col sm={6} xl={4} key={el[0]}>
+                                    <SneakersFromMyCollection  img={el[1].img} title={el[1].title} price={el[1].price} id={el[0]}></SneakersFromMyCollection>
+                                </Col>
+                            )
+                        })}
+                    </Row>
+
                     {(myCollection.length === 0) && null}
                 </Card.Body>
             </Card>
