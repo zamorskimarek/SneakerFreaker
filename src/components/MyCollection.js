@@ -5,6 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { getDatabase, ref, onValue } from "firebase/database";
 import SneakersFromMyCollection from "./SneakersFromMyCollection";
 import Menu from "./Menu";
+import ButtonToTop from "./ButtonToTop";
 
 
 
@@ -16,6 +17,14 @@ export default function MyCollection() {
     const [myCollection, setMyCollection] = useState([])
     const [totalPrice, setTotalPrice] = useState(null)
     const [loading, setLoading] = useState(false)
+
+    const [scroll, setScroll] = useState(false);
+
+    useEffect(() => {
+        window.addEventListener("scroll", () => {
+            setScroll(window.scrollY > 360);
+        });
+    }, []);
 
     useEffect(() => {
         setLoading(true)
@@ -75,7 +84,7 @@ export default function MyCollection() {
                 `}
             </style>
             <Menu></Menu>
-            <Card className="card-bckgrnd">
+            <Card id="top" className="card-bckgrnd">
                 <Card.Body>
                     <h2 className="text-center mb-4">My Collection of : <strong>{currentUser.email}</strong></h2>
                     <h3 className="text-center mb-4">Sneakers in My Collection: {myCollection.length}</h3>
@@ -102,6 +111,7 @@ export default function MyCollection() {
             <div className="w-100 text-center mt-2">
                 <Button className="btn-custom mb-2" variant="link" onClick={handleLogout}>Log Out</Button>
             </div>
+            {scroll && <ButtonToTop location="#top" />}
         </>
     )
 }

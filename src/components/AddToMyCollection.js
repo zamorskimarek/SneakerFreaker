@@ -3,6 +3,7 @@ import {Card, Button, Form, Spinner, Col, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import SearchResult from "./SearchResult";
 import Menu from "./Menu";
+import ButtonToTop from "./ButtonToTop";
 
 export default function AddToMyCollection() {
     const [searchResults, setSearchResults] = useState([])
@@ -78,6 +79,13 @@ export default function AddToMyCollection() {
     //         .catch(err => console.error(err));
     //
     // },[])
+    const [scroll, setScroll] = useState(false);
+
+    useEffect(() => {
+        window.addEventListener("scroll", () => {
+            setScroll(window.scrollY > 450);
+        });
+    }, []);
 
     function handleNext() {
         setPage(prevState => prevState + 1)
@@ -169,7 +177,7 @@ export default function AddToMyCollection() {
                 `}
             </style>
             <Menu></Menu>
-            <Card className="card-bckgrnd">
+            <Card id="top-collection" className="card-bckgrnd">
                 <Card.Body>
                     <h2 className="text-center mb-4">Add a New Sneaker!</h2>
                     <Form onSubmit={handleSubmit}>
@@ -248,7 +256,7 @@ export default function AddToMyCollection() {
                             )
                         })}
                     </Row>
-
+                    {scroll && <ButtonToTop location="#top-collection" />}
                 </Card.Body>
             </Card>
         </>

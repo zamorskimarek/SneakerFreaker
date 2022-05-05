@@ -13,7 +13,7 @@ import AddToMyCollection from "./AddToMyCollection";
 
 function App() {
   return (
-      <Container className="d-flex align-items-center justify-content-center bckgrnd" style={{minHeight: "100vh"}} fluid="md">
+      <Container className="d-flex align-items-center justify-content-center bckgrnd" style={{minHeight: "100vh", position: "relative"}} fluid="md">
           <div className="w-100">
               <Router>
                   <AuthProvider>
