@@ -6,7 +6,7 @@ export default function ButtonToTop({location}) {
         width: "75px",
         height: "75px",
         borderRadius: "50%",
-        backgroundColor: "#a8dadcff",
+        backgroundColor: "#457b9dff",
         border: "3px solid #e63946ff",
         position: "fixed",
         right:"12vw",

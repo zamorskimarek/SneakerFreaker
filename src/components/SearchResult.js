@@ -29,6 +29,7 @@ export default function SearchResult({id, title, media, price}) {
                     <Toast show={toast} onClose={toggleShowToast} position>
                         <Toast.Header>
                             <img
+                                loading="lazy"
                                 className="me-auto"
                                 src={require('../logo/logo_small.jpg')}
                                 alt=""
